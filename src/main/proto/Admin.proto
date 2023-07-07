@@ -1,0 +1,162 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+// option java_multiple_files = true;
+// option java_package = "com.icesimba.yybsbackend";
+// option java_outer_classname = "xxxx";
+option java_multiple_files = true;
+// 月影别墅IOS Admin
+package vampire_ios.v1;
+service Admin{
+  // 月影别墅IOS查询玩家基础信息
+  rpc GetUserInfo (GetVampireIOSUserRequest) returns (GetVampireIOSUserReply) {
+    option (google.api.http) = {
+      get: "/api/v1/admin/users"
+    };
+  }
+  // 管理员获取玩家背包所有信息
+  rpc GetPlayerInfo(AdminGetPlayerInfoReq)returns(AdminGetPlayerInfoReply){
+    option (google.api.http) = {
+      get: "/api/v1/admin/user/{userId}"
+    };
+  }
+  // 管理员重置玩家账号
+  rpc ResetPlayer(AdminResetPlayerReq)returns(AdminResetPlayerReply){
+    option (google.api.http) = {
+      post: "/api/v1/admin/user/{userId}/reset"
+      body: "*",
+    };
+  }
+  // 管理员查询道具统计
+  rpc GetItemStatistics(AdminGetItemStatisticsReq)returns(AdminGetItemStatisticsReply){
+    option (google.api.http) = {
+      get: "/api/v1/admin/item/statistics"
+    };
+  }
+  // 管理员查询商品统计
+  rpc GetCommodityStatistics(AdminGetCommodityStatisticsReq)returns(AdminGetCommodityStatisticsReply){
+    option (google.api.http) = {
+      get: "/api/v1/admin/commodity/statistics"
+    };
+  }
+
+
+}
+message GetVampireIOSUserRequest{
+  // 用户showId
+  string userId = 1;
+  // simba_id
+  string simbaId = 2;
+}
+message VampireIOSUser{
+  string userId = 1;
+  // simba_id
+  string simbaId = 2;
+  // 用户来源
+  string source = 3;
+  // 用户状态
+  int32 status = 4;
+  // 注册时间
+  double registerTime = 5;
+  // 注销时间
+  double cancellationTime = 6;
+  // 免广告卡到期时间
+  double noneAdCardEndTime = 7;
+  // 生日
+  string birthday = 8;
+  // 最后拜访时间
+  double lastVisitTime = 9;
+  // 每日奖励领取时间
+  double dailyRewardTime = 10;
+}
+message GetVampireIOSUserReply{
+  repeated VampireIOSUser users = 1;
+}
+message AdminGetCommodityStatisticsReq {
+  // 开始时间
+  string startTime = 1;
+  // 结束时间
+  string endTime = 2;
+  // 查询的商品
+  string commodityId = 3;
+}
+message AdminGetCommodityStatisticsReply{
+  repeated AdminCommodityStatistics commodityStatistics = 1;
+}
+message AdminCommodityStatistics{
+  // 商品id
+  string commodityId = 1;
+  // 商品名称
+  string name = 2;
+  // 商品购买数量
+  uint32 count = 3;
+  // 购买人次
+  int32 userCount = 4;
+}
+
+// 管理员查询道具统计 请求
+message AdminGetItemStatisticsReq{
+  // 开始时间
+  string startTime = 1;
+  // 结束时间
+  string endTime = 2;
+  // 查询消耗的道具
+  string itemSn = 3;
+}
+
+// 管理员查询商品统计 返还
+message AdminGetItemStatisticsReply{
+  // 消耗总量
+  uint32 consumeCount = 1;
+  // 道具统计
+  repeated AdminItemStatistics itemStatistics = 2;
+}
+message AdminItemStatistics{
+  string commodityId = 1;
+  // 商品名称
+  string name = 2;
+  // 商品购买数量
+  uint32 count = 3;
+  // 道具消耗数量
+  uint32 consumeCount = 4;
+  // 所占比例
+  float ratio = 5;
+}
+
+message AdminGetPlayerInfoReq{
+  string userId = 1;
+}
+message AdminGetPlayerInfoReply{
+  UserInfo userInfo = 1;
+  repeated AdminPassportInfo passportInfo = 2;
+  AdminGetBackpackReply backpackInfo = 3;
+}
+message UserInfo{
+  string simbaId = 1;
+}
+
+message AdminPassportInfo{
+  string type = 1;
+  string startTime = 2;
+  string expiredTime = 3;
+  string lastReceiveTime = 4;
+}
+message AdminResetPlayerReq{
+  string userId = 1;
+}
+message AdminResetPlayerReply{
+
+}
+message AdminItem{
+  //类型
+  int32 type = 1;
+  //id
+  string id = 2;
+  //数量
+  uint32 count = 3;
+  // 名称
+  string name = 4;
+}
+message AdminGetBackpackReply{
+  repeated AdminItem items = 1;
+}
+
