@@ -2,8 +2,10 @@
 kotlin 
 
 ``` sh 
+# (one for all)
 ./gradlew clean build 
-
+# (only generate proto)
+./gradlew generateProto
 ```
 
 generate in build/generated/source/proto/main
@@ -55,3 +57,4 @@ protobuf {
 }
 
 ```
+
