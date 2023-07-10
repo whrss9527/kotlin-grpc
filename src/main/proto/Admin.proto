@@ -1,38 +1,29 @@
 syntax = "proto3";
 import "google/api/annotations.proto";
-// option java_multiple_files = true;
-// option java_package = "com.icesimba.yybsbackend";
-// option java_outer_classname = "xxxx";
 option java_multiple_files = true;
-// 月影别墅IOS Admin
 package vampire_ios.v1;
 service Admin{
-  // 月影别墅IOS查询玩家基础信息
   rpc GetUserInfo (GetVampireIOSUserRequest) returns (GetVampireIOSUserReply) {
     option (google.api.http) = {
       get: "/api/v1/admin/users"
     };
   }
-  // 管理员获取玩家背包所有信息
   rpc GetPlayerInfo(AdminGetPlayerInfoReq)returns(AdminGetPlayerInfoReply){
     option (google.api.http) = {
       get: "/api/v1/admin/user/{userId}"
     };
   }
-  // 管理员重置玩家账号
   rpc ResetPlayer(AdminResetPlayerReq)returns(AdminResetPlayerReply){
     option (google.api.http) = {
       post: "/api/v1/admin/user/{userId}/reset"
       body: "*",
     };
   }
-  // 管理员查询道具统计
   rpc GetItemStatistics(AdminGetItemStatisticsReq)returns(AdminGetItemStatisticsReply){
     option (google.api.http) = {
       get: "/api/v1/admin/item/statistics"
     };
   }
-  // 管理员查询商品统计
   rpc GetCommodityStatistics(AdminGetCommodityStatisticsReq)returns(AdminGetCommodityStatisticsReply){
     option (google.api.http) = {
       get: "/api/v1/admin/commodity/statistics"
